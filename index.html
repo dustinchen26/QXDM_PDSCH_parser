@@ -46,8 +46,12 @@ th, td {
 
 
 <pre style="background:#f9f9f9; border:1px solid #ccc; padding:10px; white-space:pre; display:inline-block">
-QXDM點選Options->Parsing Options->QCAT Format不要點選
-📌 複製底下格式內容到（.txt），並上傳檔案進行Parsing：
+【操作說明】
+1. QXDM 點選 Options-> Parsing Options => Export Parsed Text勾起來 / QCAT Format不要勾
+2. Filter出所有 [0xB887]	NR5G MAC PDSCH Status 的packet
+3. ctrl + A 複製所有 packet，貼到記事本存成（.txt）檔案，按底下選擇檔案，按下Pasre按鈕分析slot error rate：
+
+// QCAT Format不要勾會顯示如下
 17:07:27.989670	[0xB887]	NR5G MAC PDSCH Status
 MacVersion {
    Major.Minor = 2
