@@ -1,0 +1,403 @@
+17:29:19.449705          LOG                      [0xB887]                 NR5G MAC PDSCH Status                                       1                        Length:   88
+17:29:19.449705	[0xB887]	NR5G MAC PDSCH Status
+MacVersion {
+   Major.Minor = 2
+   5
+}
+Version 131077 {
+   Log Fields Change {
+   }
+   Log Fields Change BMask = 0x0
+   Sub ID = 0
+   Num Records = 2
+   Records[0] {
+      System Time {
+         Slot = 16
+         Numerology =    30kHz
+         Frame = 631
+      }
+      Num PDSCH Status = 1
+      PDSCH Status Info[0] {
+         Carrier ID = 0
+         Tech Id = 1
+         Opcode = 0
+         Conn ID = 0
+         Bandwidth = 12
+         Band Type = 0
+         Variant Id = 0
+         Physical cell ID = 186
+         EARFCN =   644736
+         TB Index = 0
+         TB Size =     1281
+         SCS MU = 1
+         MCS = 18
+         Num Rbs =    4
+         RV = 0
+         HARQ Or MBSFN Area Id = 5
+         RNTI Type = 0
+         K1 Or PMCH ID = 3
+         TCI = 0
+         Num Layers = 4
+         Iteration Index = 0
+         CRC State =     PASS
+         CRC Status = PASS
+         New Tx Flag = 1
+         NDI = 0
+         Discard Mode = 0
+         Bypass Decode = 0
+         Bypass HARQ = 0
+         Num ReTx = 0
+         HD Onload Timeout = 0
+         HARQ Onload Timeout = 0
+         HD Offload Timeout = 0
+         HARQ Offload Timeout = 0
+         Did Recomb = 0
+         Is IOVec Valid = true
+         Mod Type =   64_QAM
+         High Clock Mode = 0
+         Num RX = 4x4_MIMO
+         RX Antenna Mapping 0 = 0
+         RX Antenna Mapping 1 = 0
+         RX Antenna Mapping 2 = 0
+         RX Antenna Mapping 3 = 0
+      }
+   }
+   Records[1] {
+      System Time {
+         Slot = 3
+         Numerology =    30kHz
+         Frame = 632
+      }
+      Num PDSCH Status = 1
+      PDSCH Status Info[0] {
+         Carrier ID = 0
+         Tech Id = 1
+         Opcode = 0
+         Conn ID = 0
+         Bandwidth = 12
+         Band Type = 0
+         Variant Id = 0
+         Physical cell ID = 186
+         EARFCN =   644736
+         TB Index = 0
+         TB Size =      469
+         SCS MU = 1
+         MCS = 18
+         Num Rbs =    4
+         RV = 0
+         HARQ Or MBSFN Area Id = 8
+         RNTI Type = 0
+         K1 Or PMCH ID = 5
+         TCI = 0
+         Num Layers = 4
+         Iteration Index = 0
+         CRC State =     FAIL
+         CRC Status = FAIL
+         New Tx Flag = 1
+         NDI = 0
+         Discard Mode = 0
+         Bypass Decode = 0
+         Bypass HARQ = 0
+         Num ReTx = 0
+         HD Onload Timeout = 0
+         HARQ Onload Timeout = 0
+         HD Offload Timeout = 0
+         HARQ Offload Timeout = 0
+         Did Recomb = 0
+         Is IOVec Valid = true
+         Mod Type =   64_QAM
+         High Clock Mode = 0
+         Num RX = 4x4_MIMO
+         RX Antenna Mapping 0 = 0
+         RX Antenna Mapping 1 = 0
+         RX Antenna Mapping 2 = 0
+         RX Antenna Mapping 3 = 0
+      }
+   }
+}
+17:29:19.453587          LOG                      [0xB887]                 NR5G MAC PDSCH Status                                       1                        Length:  116
+17:29:19.453587	[0xB887]	NR5G MAC PDSCH Status
+MacVersion {
+   Major.Minor = 2
+   5
+}
+Version 131077 {
+   Log Fields Change {
+   }
+   Log Fields Change BMask = 0x0
+   Sub ID = 0
+   Num Records = 3
+   Records[0] {
+      System Time {
+         Slot = 6
+         Numerology =    30kHz
+         Frame = 632
+      }
+      Num PDSCH Status = 1
+      PDSCH Status Info[0] {
+         Carrier ID = 0
+         Tech Id = 1
+         Opcode = 0
+         Conn ID = 0
+         Bandwidth = 12
+         Band Type = 0
+         Variant Id = 0
+         Physical cell ID = 186
+         EARFCN =   644736
+         TB Index = 0
+         TB Size =     1281
+         SCS MU = 1
+         MCS = 18
+         Num Rbs =    4
+         RV = 0
+         HARQ Or MBSFN Area Id = 5
+         RNTI Type = 0
+         K1 Or PMCH ID = 3
+         TCI = 0
+         Num Layers = 4
+         Iteration Index = 0
+         CRC State =     PASS
+         CRC Status = PASS
+         New Tx Flag = 1
+         NDI = 1
+         Discard Mode = 0
+         Bypass Decode = 0
+         Bypass HARQ = 0
+         Num ReTx = 0
+         HD Onload Timeout = 0
+         HARQ Onload Timeout = 0
+         HD Offload Timeout = 0
+         HARQ Offload Timeout = 0
+         Did Recomb = 0
+         Is IOVec Valid = true
+         Mod Type =   64_QAM
+         High Clock Mode = 0
+         Num RX = 4x4_MIMO
+         RX Antenna Mapping 0 = 0
+         RX Antenna Mapping 1 = 0
+         RX Antenna Mapping 2 = 0
+         RX Antenna Mapping 3 = 0
+      }
+   }
+   Records[1] {
+      System Time {
+         Slot = 7
+         Numerology =    30kHz
+         Frame = 632
+      }
+      Num PDSCH Status = 1
+      PDSCH Status Info[0] {
+         Carrier ID = 0
+         Tech Id = 1
+         Opcode = 0
+         Conn ID = 0
+         Bandwidth = 12
+         Band Type = 0
+         Variant Id = 0
+         Physical cell ID = 186
+         EARFCN =   644736
+         TB Index = 0
+         TB Size =      349
+         SCS MU = 1
+         MCS = 18
+         Num Rbs =    3
+         RV = 2
+         HARQ Or MBSFN Area Id = 10
+         RNTI Type = 0
+         K1 Or PMCH ID = 7
+         TCI = 0
+         Num Layers = 4
+         Iteration Index = 0
+         CRC State =     FAIL
+         CRC Status = FAIL
+         New Tx Flag = 1
+         NDI = 0
+         Discard Mode = 0
+         Bypass Decode = 0
+         Bypass HARQ = 0
+         Num ReTx = 0
+         HD Onload Timeout = 0
+         HARQ Onload Timeout = 0
+         HD Offload Timeout = 0
+         HARQ Offload Timeout = 0
+         Did Recomb = 0
+         Is IOVec Valid = true
+         Mod Type =   64_QAM
+         High Clock Mode = 0
+         Num RX = 4x4_MIMO
+         RX Antenna Mapping 0 = 0
+         RX Antenna Mapping 1 = 0
+         RX Antenna Mapping 2 = 0
+         RX Antenna Mapping 3 = 0
+      }
+   }
+   Records[2] {
+      System Time {
+         Slot = 10
+         Numerology =    30kHz
+         Frame = 632
+      }
+      Num PDSCH Status = 1
+      PDSCH Status Info[0] {
+         Carrier ID = 0
+         Tech Id = 1
+         Opcode = 0
+         Conn ID = 0
+         Bandwidth = 12
+         Band Type = 0
+         Variant Id = 0
+         Physical cell ID = 186
+         EARFCN =   644736
+         TB Index = 0
+         TB Size =     1281
+         SCS MU = 1
+         MCS = 18
+         Num Rbs =    4
+         RV = 0
+         HARQ Or MBSFN Area Id = 3
+         RNTI Type = 0
+         K1 Or PMCH ID = 4
+         TCI = 0
+         Num Layers = 4
+         Iteration Index = 0
+         CRC State =     PASS
+         CRC Status = PASS
+         New Tx Flag = 1
+         NDI = 0
+         Discard Mode = 0
+         Bypass Decode = 0
+         Bypass HARQ = 0
+         Num ReTx = 0
+         HD Onload Timeout = 0
+         HARQ Onload Timeout = 0
+         HD Offload Timeout = 0
+         HARQ Offload Timeout = 0
+         Did Recomb = 0
+         Is IOVec Valid = true
+         Mod Type =   64_QAM
+         High Clock Mode = 0
+         Num RX = 4x4_MIMO
+         RX Antenna Mapping 0 = 0
+         RX Antenna Mapping 1 = 0
+         RX Antenna Mapping 2 = 0
+         RX Antenna Mapping 3 = 0
+      }
+   }
+}
+17:29:19.457696          LOG                      [0xB887]                 NR5G MAC PDSCH Status                                       1                        Length:   88
+17:29:19.457696	[0xB887]	NR5G MAC PDSCH Status
+MacVersion {
+   Major.Minor = 2
+   5
+}
+Version 131077 {
+   Log Fields Change {
+   }
+   Log Fields Change BMask = 0x0
+   Sub ID = 0
+   Num Records = 2
+   Records[0] {
+      System Time {
+         Slot = 13
+         Numerology =    30kHz
+         Frame = 632
+      }
+      Num PDSCH Status = 1
+      PDSCH Status Info[0] {
+         Carrier ID = 0
+         Tech Id = 1
+         Opcode = 0
+         Conn ID = 0
+         Bandwidth = 12
+         Band Type = 0
+         Variant Id = 0
+         Physical cell ID = 186
+         EARFCN =   644736
+         TB Index = 0
+         TB Size =      469
+         SCS MU = 1
+         MCS = 18
+         Num Rbs =    4
+         RV = 0
+         HARQ Or MBSFN Area Id = 1
+         RNTI Type = 0
+         K1 Or PMCH ID = 5
+         TCI = 0
+         Num Layers = 4
+         Iteration Index = 0
+         CRC State =     FAIL
+         CRC Status = FAIL
+         New Tx Flag = 1
+         NDI = 1
+         Discard Mode = 0
+         Bypass Decode = 0
+         Bypass HARQ = 0
+         Num ReTx = 0
+         HD Onload Timeout = 0
+         HARQ Onload Timeout = 0
+         HD Offload Timeout = 0
+         HARQ Offload Timeout = 0
+         Did Recomb = 0
+         Is IOVec Valid = true
+         Mod Type =   64_QAM
+         High Clock Mode = 0
+         Num RX = 4x4_MIMO
+         RX Antenna Mapping 0 = 0
+         RX Antenna Mapping 1 = 0
+         RX Antenna Mapping 2 = 0
+         RX Antenna Mapping 3 = 0
+      }
+   }
+   Records[1] {
+      System Time {
+         Slot = 17
+         Numerology =    30kHz
+         Frame = 632
+      }
+      Num PDSCH Status = 1
+      PDSCH Status Info[0] {
+         Carrier ID = 0
+         Tech Id = 1
+         Opcode = 0
+         Conn ID = 0
+         Bandwidth = 12
+         Band Type = 0
+         Variant Id = 0
+         Physical cell ID = 186
+         EARFCN =   644736
+         TB Index = 0
+         TB Size =      349
+         SCS MU = 1
+         MCS = 18
+         Num Rbs =    3
+         RV = 2
+         HARQ Or MBSFN Area Id = 8
+         RNTI Type = 0
+         K1 Or PMCH ID = 7
+         TCI = 0
+         Num Layers = 4
+         Iteration Index = 0
+         CRC State =     FAIL
+         CRC Status = FAIL
+         New Tx Flag = 1
+         NDI = 0
+         Discard Mode = 0
+         Bypass Decode = 0
+         Bypass HARQ = 0
+         Num ReTx = 0
+         HD Onload Timeout = 0
+         HARQ Onload Timeout = 0
+         HD Offload Timeout = 0
+         HARQ Offload Timeout = 0
+         Did Recomb = 0
+         Is IOVec Valid = true
+         Mod Type =   64_QAM
+         High Clock Mode = 0
+         Num RX = 4x4_MIMO
+         RX Antenna Mapping 0 = 0
+         RX Antenna Mapping 1 = 0
+         RX Antenna Mapping 2 = 0
+         RX Antenna Mapping 3 = 0
+      }
+   }
+}

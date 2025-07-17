@@ -1,0 +1,200 @@
+<!-- 
+  Copyright © [2025] [Dustin_Chen]. All rights reserved.
+  Author: Dustin Chen
+  Email:  Dustin_Chen@compal.com
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QXDM NR5G PDSCH Parser - Slot Error Rate</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+         body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+        }	 
+  
+  
+    body { font-family: Arial; padding: 20px; }
+    input[type="file"] { margin-bottom: 10px; }
+    table, th, td { border: 1px solid black; border-collapse: collapse; padding: 5px; }
+    th { background-color: #f2f2f2; }
+	
+    #outputTable {
+  margin-top: 20px;
+  width: auto;
+  table-layout: auto;
+}
+th, td {
+  white-space: nowrap;
+}
+
+    button { margin-top: 10px; padding: 10px 20px; }
+    #stats, #slotStats { margin-top: 20px; font-weight: bold; white-space: pre-line; }
+  </style>
+</head>
+<body>
+
+
+<h2>QXDM NR5G PDSCH Parser（上傳 + 統計 + Slot Error Rate）</h2>
+
+<p style="margin: 0;">Author: Dustin_Chen, email: <a href="mailto:Dustin_Chen@compal.com"
+            style="line-height: 1;">Dustin_Chen@compal.com</a> or <a href="mailto:chuhpsdustin@gmail.com"
+            style="line-height: 1;">chuhpsdustin@gmail.com</a></p>
+
+
+<pre style="background:#f9f9f9; border:1px solid #ccc; padding:10px; white-space:pre; display:inline-block">
+QXDM點選Options->Parsing Options->QCAT Format不要點選
+📌 複製底下格式內容到（.txt），並上傳檔案進行Parsing：
+17:07:27.989670	[0xB887]	NR5G MAC PDSCH Status
+MacVersion {
+   Major.Minor = 2
+   5
+}
+Version 131077 {
+   Log Fields Change {
+   }
+   Log Fields Change BMask = 0x0
+   Sub ID = 0
+   Num Records = 1
+   Records[0] {
+      System Time {
+         Slot = 1
+         Numerology =    30kHz
+         Frame = 558
+      }
+      Num PDSCH Status = 1
+      PDSCH Status Info[0] {
+         Carrier ID = 0
+         ...
+         CRC Status = PASS
+         ...
+      }
+</pre>
+<br>
+<input type="file" id="fileInput" accept=".txt">
+<br>
+<button onclick="parseFile()">Parse</button>
+<button onclick="exportToExcel()">Export to Excel</button>
+
+<div id="stats"></div>
+<div id="slotStats"></div>
+
+<table id="outputTable">
+  <thead>
+    <tr>
+      <th>Frame</th>
+      <th>Slot</th>
+      <th>K1 Or PMCH ID</th>
+      <th>HARQ Or MBSFN Area Id</th>
+      <th>CRC Status</th>
+      <th>MCS</th>
+      <th>Num Rbs</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+function extractField(text, fieldName) {
+  const regex = new RegExp(fieldName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*=\\s*([\\w\\d]+)', 'i');
+  const match = text.match(regex);
+  return match ? match[1] : '';
+}
+
+function parseLog(text) {
+  const tbody = document.querySelector("#outputTable tbody");
+  const statsDiv = document.getElementById("stats");
+  const slotStatsDiv = document.getElementById("slotStats");
+  tbody.innerHTML = "";
+  statsDiv.innerHTML = "";
+  slotStatsDiv.innerHTML = "";
+
+  const regexChunks = text.match(/Records\[\d+\]\s*{[\s\S]*?PDSCH Status Info\[\d+\]\s*{[\s\S]*?RX Antenna Mapping 3\s*=\s*\d+\s*}/g);
+  if (!regexChunks) {
+    alert("找不到符合格式的紀錄！");
+    return;
+  }
+
+  let total = 0;
+  let passCount = 0;
+  let failCount = 0;
+  const slotStats = {}; // slot: {pass: x, fail: y}
+
+  regexChunks.forEach(chunk => {
+    const frame = extractField(chunk, 'Frame');
+    const slot = extractField(chunk, 'Slot');
+    const k1 = extractField(chunk, 'K1 Or PMCH ID');
+    const harq = extractField(chunk, 'HARQ Or MBSFN Area Id');
+    const crc = extractField(chunk, 'CRC Status');
+    const mcs = extractField(chunk, 'MCS');
+    const rbs = extractField(chunk, 'Num Rbs');
+
+    total++;
+    const crcUpper = crc.toUpperCase();
+    if (crcUpper === "PASS") {
+      passCount++;
+    } else {
+      failCount++;
+    }
+
+    const slotNum = parseInt(slot);
+    if (!slotStats[slotNum]) {
+      slotStats[slotNum] = { pass: 0, fail: 0 };
+    }
+    if (crcUpper === "PASS") {
+      slotStats[slotNum].pass++;
+    } else {
+      slotStats[slotNum].fail++;
+    }
+
+    const row = document.createElement("tr");
+    [frame, slot, k1, harq, crc, mcs, rbs].forEach(val => {
+      const td = document.createElement("td");
+      td.textContent = val;
+      row.appendChild(td);
+    });
+    tbody.appendChild(row);
+  });
+
+  const errorRateOverall = ((failCount / total) * 100).toFixed(2);
+  statsDiv.innerHTML = `總筆數：${total}，CRC FAIL 筆數：${failCount}，❗ Error Rate（總）：${errorRateOverall}%`;
+
+  const sortedSlots = Object.keys(slotStats).map(Number).sort((a, b) => a - b);
+  const slotLines = sortedSlots.map(slot => {
+    const { pass, fail } = slotStats[slot];
+    const total = pass + fail;
+    const rate = total > 0 ? (fail / total * 100).toFixed(2) : "0.00";
+    return `Slot ${slot} | Error Rate = ${rate}% (${fail}/${total})`;
+  });
+
+  slotStatsDiv.innerText = slotLines.join('\n');
+}
+
+function parseFile() {
+  const fileInput = document.getElementById("fileInput");
+  const file = fileInput.files[0];
+  if (!file) {
+    alert("請選擇一個 .txt 檔案！");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const content = e.target.result;
+    parseLog(content);
+  };
+  reader.readAsText(file);
+}
+
+function exportToExcel() {
+  const table = document.getElementById("outputTable");
+  const wb = XLSX.utils.table_to_book(table, { sheet: "PDSCH Status" });
+  XLSX.writeFile(wb, "NR5G_PDSCH_Status.xlsx");
+}
+</script>
+
+</body>
+</html>
