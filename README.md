@@ -73,5 +73,5 @@ Version 131077 {
 總筆數：1，CRC FAIL 筆數：0，❗ Error Rate（總）：0.00%
 Slot 16 | Error Rate = 0.00% (0/1)
 Frame	Slot	CRC Status	CRC State	HARQ Id	K1	MCS	Num Rbs	TB Size	NDI	RV	Num Layers	Mod Type
-631		16		PASS		PASS		5		3	18	4		1281	0	0	4			64_QAM
+631	16	PASS	PASS	5	3	18	4	1281	0	0	4	64_QAM
 ```
