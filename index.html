@@ -19,65 +19,56 @@
 		padding-bottom: 20px;
 		padding-left: 20px;
 	}
-    input[type="file"] { margin-bottom: 10px; }
-    table, th, td { border: 1px solid black; border-collapse: collapse; padding: 5px; }
-    th { background-color: #f2f2f2; }
-	
-    #outputTable {
-  margin-top: 20px;
-  width: auto;
-  table-layout: auto;
-}
-th, td {
-  white-space: nowrap;
-}
 
-    button { margin-top: 10px; padding: 10px 20px; }
-    #stats, #slotStats { margin-top: 20px; font-weight: bold; white-space: pre-line; }
+    input[type="file"] {
+      margin-bottom: 10px;
+    }
+
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    #outputTable {
+      margin-top: 20px;
+      width: auto;
+      table-layout: auto;
+    }
+
+    th, td {
+      white-space: nowrap;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+    }
+
+    #stats, #slotStats {
+      margin-top: 20px;
+      font-weight: bold;
+      white-space: pre-line;
+    }
   </style>
 </head>
 <body>
 
-
 <h2>QXDM NR5G PDSCH Parser（上傳 + 統計 + Slot Error Rate）</h2>
 
-<p style="margin: 0;">Author: Dustin_Chen, email: <a href="mailto:Dustin_Chen@compal.com"
-            style="line-height: 1;">Dustin_Chen@compal.com</a> or <a href="mailto:chuhpsdustin@gmail.com"
-            style="line-height: 1;">chuhpsdustin@gmail.com</a></p>
-
+<p style="margin: 0;">Author: Dustin_Chen, email: <a href="mailto:Dustin_Chen@compal.com">Dustin_Chen@compal.com</a> or <a href="mailto:chuhpsdustin@gmail.com">chuhpsdustin@gmail.com</a></p>
 
 <pre style="background:#f9f9f9; border:1px solid #ccc; padding:10px; white-space:pre; display:inline-block">
 【操作說明】
 1. QXDM 點選 Options-> Parsing Options => Export Parsed Text勾起來 / QCAT Format不要勾
-2. Filter出所有 [0xB887]	NR5G MAC PDSCH Status 的packet
+2. Filter出所有 [0xB887] NR5G MAC PDSCH Status 的packet
 3. ctrl + A 複製所有 packet，貼到記事本存成（.txt）檔案，按底下選擇檔案，按下Pasre按鈕分析slot error rate：
-
-// QCAT Format不要勾會顯示如下
-17:07:27.989670	[0xB887]	NR5G MAC PDSCH Status
-MacVersion {
-   Major.Minor = 2
-   5
-}
-Version 131077 {
-   Log Fields Change {
-   }
-   Log Fields Change BMask = 0x0
-   Sub ID = 0
-   Num Records = 1
-   Records[0] {
-      System Time {
-         Slot = 1
-         Numerology =    30kHz
-         Frame = 558
-      }
-      Num PDSCH Status = 1
-      PDSCH Status Info[0] {
-         Carrier ID = 0
-         ...
-         CRC Status = PASS
-         ...
-      }
 </pre>
+
 <br>
 <input type="file" id="fileInput" accept=".txt">
 <br>
@@ -92,11 +83,17 @@ Version 131077 {
     <tr>
       <th>Frame</th>
       <th>Slot</th>
-      <th>K1 Or PMCH ID</th>
-      <th>HARQ Or MBSFN Area Id</th>
       <th>CRC Status</th>
+      <th>CRC State</th>
+      <th>HARQ Id</th>
+      <th>K1</th>
       <th>MCS</th>
       <th>Num Rbs</th>
+      <th>TB Size</th>
+      <th>NDI</th>
+      <th>RV</th>
+      <th>Num Layers</th>
+      <th>Mod Type</th>
     </tr>
   </thead>
   <tbody></tbody>
@@ -104,7 +101,7 @@ Version 131077 {
 
 <script>
 function extractField(text, fieldName) {
-  const regex = new RegExp(fieldName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*=\\s*([\\w\\d]+)', 'i');
+  const regex = new RegExp(fieldName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*=\\s*([\\w\\d_]+)', 'i');
   const match = text.match(regex);
   return match ? match[1] : '';
 }
@@ -126,19 +123,25 @@ function parseLog(text) {
   let total = 0;
   let passCount = 0;
   let failCount = 0;
-  const slotStats = {}; // slot: {pass: x, fail: y}
+  const slotStats = {};
 
   regexChunks.forEach(chunk => {
     const frame = extractField(chunk, 'Frame');
     const slot = extractField(chunk, 'Slot');
-    const k1 = extractField(chunk, 'K1 Or PMCH ID');
+    const crcStatus = extractField(chunk, 'CRC Status');
+    const crcState = extractField(chunk, 'CRC State');
     const harq = extractField(chunk, 'HARQ Or MBSFN Area Id');
-    const crc = extractField(chunk, 'CRC Status');
+    const k1 = extractField(chunk, 'K1 Or PMCH ID');
     const mcs = extractField(chunk, 'MCS');
     const rbs = extractField(chunk, 'Num Rbs');
+    const tbSize = extractField(chunk, 'TB Size');
+    const ndi = extractField(chunk, 'NDI');
+    const rv = extractField(chunk, 'RV');
+    const numLayers = extractField(chunk, 'Num Layers');
+    const modType = extractField(chunk, 'Mod Type');
 
     total++;
-    const crcUpper = crc.toUpperCase();
+    const crcUpper = crcStatus.toUpperCase();
     if (crcUpper === "PASS") {
       passCount++;
     } else {
@@ -156,7 +159,7 @@ function parseLog(text) {
     }
 
     const row = document.createElement("tr");
-    [frame, slot, k1, harq, crc, mcs, rbs].forEach(val => {
+    [frame, slot, crcStatus, crcState, harq, k1, mcs, rbs, tbSize, ndi, rv, numLayers, modType].forEach(val => {
       const td = document.createElement("td");
       td.textContent = val;
       row.appendChild(td);
